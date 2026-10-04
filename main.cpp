@@ -3,6 +3,7 @@
 #include <string>
 #include <absl/container/flat_hash_map.h>
 
+// hash memoisation
 struct string_hash_memo
 {
 	std::size_t h{};
@@ -24,6 +25,8 @@ struct string_hash
 template <typename T1, typename T2>
 void lookup1(const T1 &m1, const T2 &m2, std::string_view key)
 {
+	// two hashes for 2 lookups
+
 	auto it1 = m1.find(key); // lookup, will hash
 	if (it1 != m1.end())
 		std::print("key: {}, value: {}\n", key, it1->second);
@@ -42,7 +45,7 @@ void lookup2(const T1 &m1, const T2 &m2, std::string_view key)
 	auto it1 = m1.find(memo); // lookup, reuse hash
 	if (it1 != m1.end())
 		std::print("key: {}, value: {}\n", key, it1->second);
-	
+
 	auto it2 = m2.find(memo); // lookup, reuse hash
 	if (it2 != m2.end())
 		std::print("key: {}, value: {}\n", key, it2->second);
